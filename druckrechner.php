@@ -63,3 +63,16 @@ function druckrechner_admin_footer_version_entfernen() {
     return '';
 }
 add_filter( 'update_footer', 'druckrechner_admin_footer_version_entfernen', 11 );
+
+
+// 🔧 Plugin-Dateien laden
+require_once DRUCKRECHNER_PATH . 'includes/assets.php';
+require_once DRUCKRECHNER_PATH . 'includes/shortcode.php';
+require_once DRUCKRECHNER_PATH . 'includes/ajax-handler.php';
+require_once DRUCKRECHNER_PATH . 'includes/helpers.php';
+require_once DRUCKRECHNER_PATH . 'admin/submenu.php';
+require_once DRUCKRECHNER_PATH . 'admin/create-table.php';
+require_once DRUCKRECHNER_PATH . 'admin/druckrechner-handle-form.php';
+require_once DRUCKRECHNER_PATH . 'admin/notices.php';
+require_once DRUCKRECHNER_PATH . 'admin/speicher-callback.php';
+require_once DRUCKRECHNER_PATH . 'admin/discount-handler.php'; // Neue Datei für die Rabatt-Logik
