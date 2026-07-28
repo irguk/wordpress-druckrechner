@@ -1,0 +1,322 @@
+<div class="col-md-6">
+    <form id="main-druck-form" action="" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="current_step" value="1">
+        
+        <div class="druck-form" id="druckForm">
+            <h3 class="text-sm-start">Druck</h3>
+            
+            <div class="mb-3 mt-3">
+                <label for="format" class="form-label">Format :</label>
+                <div class="col">
+                    <select id="format" name="format" class="form-select" onchange="updatePreview()">
+                        <option value="" disabled selected>- Format wählen -</option>
+                        <option value="A4">A4</option>
+                        <option value="A5">A5</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-6">
+                    <label for="grammatur" class="form-label">Grammatur :</label>
+                    <div class="col-sm-12">
+                        <select id="grammatur" name="grammatur" class="form-select" onchange="updatePreview()">
+                            <option value="" disabled selected>Grammatur (in g/m²)</option>
+                            <option value="80">80</option>
+                            <option value="100">100</option>
+                            <option value="120">120</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <label for="seitendruck" class="form-label">Seitendruck :</label>
+                    <div class="col-sm-12">
+                        <select id="seitendruck" name="seitendruck" class="form-select" onchange="updatePreview()">
+                            <option value="" disabled selected>- Seiteneinstellungen -</option>
+                            <option value="einseitig">Einseitig</option>
+                            <option value="beidseitig">Beidseitig</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-3 mt-3">
+                <div class="col-4">
+                    <label for="seiten" class="form-label">Seiten :</label>
+                    <div class="col-sm-12">
+                        <input type="number" id="seiten" name="seiten" class="form-control" placeholder="75" min="1" onchange="updatePreview()">
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="farbseiten" class="form-label">davon Farbseiten :</label>
+                    <div class="col-sm-12"> 
+                        <input type="number" id="farbseiten" name="farbseiten" class="form-control" placeholder="10" min="0" onchange="updatePreview()">
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="anzahl_exemplare" class="form-label">Anzahl Exemplare :</label>
+                    <div class="col-sm-12"> 
+                        <input type="number" id="anzahl_exemplare" name="anzahl_exemplare" class="form-control" value="1" min="1" onchange="updatePreview()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-3 mt-3">
+                <label class="form-label">Mehrwertsteuer:</label>
+                <div class="form-label">
+                    <label><input type="radio" name="mwst" value="privat" onchange="updatePreview()"> Privat 7% MwSt.</label>
+                    <label class="ms-3"><input type="radio" name="mwst" value="firma" onchange="updatePreview()"> Firma 19% MwSt.</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="bindung mt-4">
+            <h4 class="text-sm-start">Bindung</h4>
+            <div class="row g-3"> 
+                <div class="col-12">   
+                    <label for="bindungsart" class="form-label">Bindungsart:</label>
+                    <select id="bindungsart" name="bindungsart" class="form-select" onchange="updatePreview()"> 
+                        <option value="ohne_bindung" selected>--ohne Bindung--</option>
+                        <optgroup label="Hardcover">
+                            <option value="premium_lederoptik">Premium Lederoptik</option>
+                            <option value="klemmbuch">Klemmbuch</option>
+                            <option value="premium_kaschmirleinenoptik">Premium Kaschmirleinenoptik</option>
+                        </optgroup>
+                        <optgroup label="Softcover">
+                            <option value="plastringbindung">Plastringbindung</option>
+                            <option value="drahtringbindung">Drahtringbindung</option>
+                            <option value="faelzelband">Fälzelband</option>
+                            <option value="heissleimbindung">Heißleimbindung</option>
+                            <option value="kammbindung">Kammbindung</option>
+                            <option value="rueckstichheftung">Rückstichheftung</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="col-12" id="einband-block">
+                    <label for="einband" class="form-label">Einband :</label>
+                    <div class="col-sm-12">
+                        <select id="einband" name="einband" class="form-select" onchange="updatePreview()">
+                            <option value="" disabled selected>Bitte wählen</option>
+                        </select>
+                    </div>
+                    <p class="small text-muted mt-2">Das Angebot steht unter dem Vorbehalt, dass das Material verfügbar ist.</p>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                    <div id="praegung-block" class="col-6 bg-white border rounded-lg" >
+                      
+                              <input type="checkbox" id="praegung" class="mr-2"> 
+                              <label for="praegung">Prägung</label>
+                            
+                            <div id="schriftart-block" style="display: none;" class="mr-2">
+                                <label for="schriftart" class="form-label">Schriftart: </label>
+                                
+                                    <select id="schriftart" name="schriftart" class="form-select mr-4" onchange="updatePreview()"> <option value="" disabled selected>-----</option>
+                                        <option value="schriftart_helv">Helvetica</option>
+                                    </select>
+                                
+                             </div>
+                        
+                            <div id="farbe-block" style="display: none;" class="">
+                                    <label for="farbe" class="form-label ">Farbe:</label>
+                                    
+                                        <select id="farbe" name="farbe" class="form-select" onchange="updatePreview()"> <option value="" disabled selected>-----</option>
+                                            <option value="farbe_gold">Gold</option>
+                                            <option value="farbe_silber">Silber</option>
+                                        </select>
+                                    
+                            </div> 
+                        
+                            <div id="arbeits-name-block" style="display: none;" class="mr-2">
+                                
+                                    <input type="text" name="arbeit" class="form-control text-sm" placeholder="Arbeit (z.B.: Masterarbeit)">
+                                    <input type="text" name="name" class="form-control text-sm" placeholder="Name">
+                                
+                            </div>
+
+                    </div>
+
+                     <div id="cd-container" class="col-6 bg-white border rounded-lg">
+                                <input type="checkbox" id="cd" class="mr-2">
+                                <label for="cd">Mit CD/DVD (Optional)</label>
+                                    <div id="cd-stueck-block" class="mt-2" style="display:none;">
+                                        <label for="cd-stueck" class="block text-sm">CD/DVD Stückzahl</label>
+                                        <input type="number" id="cd-stueck" value="1" class="form-control text-sm" min="1">
+                                    </div>
+                                    <div id="cd-huelle-block" class="mt-2" style="display:none;">
+                                        <input type="checkbox" id="cd-huelle" class="mr-2">
+                                        <label for="cd-huelle">Mit selbstklebender Hülle</label>
+                                    </div>
+                                    <div id="cd-direktdruck-block" class="mt-2" style="display:none;">
+                                        <input type="checkbox" id="cd-direktdruck" class="mr-2">
+                                        <label for="cd-direktdruck">Mit Direktdruck</label>
+                                    </div>
+                            </div>
+                    </div> 
+                    <div class="row g-3">
+                        <div id="ev_block" style="display: none;" class="col-6" >
+                             <label for="ev" class="form-label">Einband vorn: </label>
+                            <div class="col-sm-12">
+                                <select id="ev" name="ev" class="form-select " onchange="updatePreview()"> 
+                                    <option value="" disabled selected>-----</option>
+                                    <option value="ev_folie_matt">Folie matt</option>
+                                    <option value="ev_karton_rot">Karton rot</option>
+                                    <option value="ev_karton_bordeaux">Karton bordeaux</option>
+                                    <option value="ev_karton_blau">Karton blau</option>
+                                    <option value="ev_karton_hellblau">Karton hellblau</option>
+                                    <option value="ev_karton_olive">Karton olive</option>
+                                    <option value="ev_karton_grun">Karton grün</option>
+                                    <option value="ev_karton_gelb">Karton gelb</option>
+                                    <option value="ev_karton_weiss">Karton weiß</option>
+                                    <option value="ev_karton_grau">Karton grau</option>
+                                    <option value="ev_karton_schwarz">Karton schwarz</option>
+                                </select>
+                            </div>
+                        </div>
+                    
+                    
+                        <div id="eh_block" style="display: none;" class="col-6"> 
+                            <label for="eh" class="form-label ">Einband hinten: </label>
+                            <div class="col-sm-12">
+                                <select id="eh" name="eh" class="form-select" onchange="updatePreview()"> 
+                                    <option value="" disabled selected>-----</option>
+                                        <option value="eh_folie_matt">Folie matt</option>
+                                        <option value="eh_karton_rot">Karton rot</option>
+                                        <option value="eh_karton_bordeaux">Karton bordeaux</option>
+                                        <option value="eh_karton_blau">Karton blau</option>
+                                        <option value="eh_karton_hellblau">Karton hellblau</option>
+                                        <option value="eh_karton_olive">Karton olive</option>
+                                        <option value="eh_karton_grun">Karton grün</option>
+                                        <option value="eh_karton_gelb">Karton gelb</option>
+                                        <option value="eh_karton_weiss">Karton weiß</option>
+                                        <option value="eh_karton_grau">Karton grau</option>
+                                        <option value="eh_karton_schwarz">Karton schwarz</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                   
+                        <div id="ringfarbe-block" style="display: none;"class="mb-3 mt-3">
+                             <label for="ringfarbe" class="form-label ">Ringfarbe: </label>
+                            <div class="col-sm-4">
+                                <select id="ringfarbe" name="ringfarbe" class="form-select text-sm-end" onchange="updatePreview()"> <option value="" disabled selected>-----</option>
+                                    <option value="ringfarbe_schwarz">schwarz</option>
+                                    <option value="ringfarbe_weiß">weiß</option>
+                                    <option value="ringfarbe_blau">blau</option>
+                                    <option value="ringfarbe_rot">rot</option>
+                                </select>
+                            </div>   
+                        </div>
+                    
+                    <div class="mb-3 mt-3">
+                        <div id="faelzelbandfarbe-block" style="display: none;"> <label for="faelzelbandfarbe" class="form-label ">Fälzelbandfarbe: </label>
+                            <div class="col-sm-4">
+                                <select id="faelzelbandfarbe" name="faelzelbandfarbe" class="form-select" onchange="updatePreview()"> <option value="" disabled selected>-----</option>
+                                    <option value="faelzelbandfarbe_weiss">weiß</option>
+                                    <option value="faelzelbandfarbe_schwarz">schwarz</option>
+                                    <option value="faelzelbandfarbe_dunkelblau">dunkelblau</option>
+                                    <option value="faelzelbandfarbe_rot">rot</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <div id="kammfarbe-block" style="display: none;"> <label for="kammfarbe" class="form-label">Kammfarbe:</label>
+                            <div class="col-sm-4">
+                                <select id="kammfarbe" name="kammfarbe" class="form-select" onchange="updatePreview()"> <option value="" disabled selected>-----</option>
+                                    <option value="kammfarbe_schwarz">schwarz</option>
+                                    <option value="kammfarbe_weiss">weiß</option>
+                                    <option value="kammfarbe_dunkelblau">dunkelblau</option>
+                                    <option value="kammfarbe_bordeaux">bordeaux</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+        </div>
+
+        <div class="lieferung mt-4">
+            <h4>Lieferung</h4>
+            <div class="row g-3">
+                <div class="col-6">
+                    <label for="versandart" class="form-label">Versandart:</label>
+                    <select id="versandart" name="versandart" class="form-select" onchange="updatePreview()">
+                        <option value="abholung" selected>Abholung</option>
+                        <option value="1-2_werktage">1-2 Werktage</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label for="zahlungsart" class="form-label">Zahlungsart:</label>
+                    <select id="zahlungsart" name="zahlungsart" class="form-select" onchange="updatePreview()">
+                        <option value="vorkasse_per_ueberweisung" selected>Vorkasse per Überweisung</option>
+                        <option value="nachname">Nachname</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="pdf_format" id="pdf-format">
+        <input type="hidden" name="pdf_grammatur" id="pdf-grammatur">
+        <input type="hidden" name="pdf_seitendruck" id="pdf-seitendruck">
+        <input type="hidden" name="pdf_seiten" id="pdf-seiten">
+        <input type="hidden" name="pdf_farbseiten" id="pdf-farbseiten">
+        <input type="hidden" name="pdf_exemplare" id="pdf-exemplare">
+        <input type="hidden" name="pdf_einzelpreis" id="pdf-einzelpreis">
+        <input type="hidden" name="pdf_gesamtpreis" id="pdf-gesamtpreis"> 
+
+        <div class="row g-3 mt-4">
+            <div class="col-6">
+                <input type="submit" name="step1_submit" id="next" class="btn btn-primary w-100" value="Weiter">
+            </div>
+            <div class="col-6">
+                <button type="button" class="btn btn-secondary w-100" id="generate-pdf-btn">
+                    Angebot als PDF
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script> 
+document.getElementById("generate-pdf-btn").addEventListener("click", function (e) {
+    e.preventDefault(); 
+
+    const form = document.getElementById('main-druck-form');
+    
+    // Hilfsfunktion zum Auslesen der Vorschau-Werte
+    const getVal = (id) => {
+        const el = document.getElementById(id);
+        if (!el) return '0.00';
+        let val = el.innerText.replace('€', '').trim();
+        return (val === '–' || val === '') ? '0.00' : val;
+    };
+
+    // Werte in die versteckten Felder kopieren
+    document.getElementById('pdf-format').value      = getVal('preview-format');
+    document.getElementById('pdf-grammatur').value   = getVal('preview-grammatur');
+    document.getElementById('pdf-seitendruck').value = getVal('preview-seitendruck');
+    document.getElementById('pdf-seiten').value      = getVal('preview-seiten');
+    document.getElementById('pdf-farbseiten').value  = getVal('preview-farbseiten');
+    document.getElementById('pdf-exemplare').value   = getVal('preview-exemplare');
+    document.getElementById('pdf-einzelpreis').value = getVal('preview-einzelpreis');
+    document.getElementById('pdf-gesamtpreis').value = getVal('preview-gesamtpreis');
+
+    // Pfad zur PDF-Datei setzen
+    const originalAction = form.action;
+    form.action = '<?php echo plugin_dir_url(__FILE__); ?>pdf.php';
+    form.target = '_blank';
+    
+    form.submit();
+
+    // Formular für normalen Gebrauch zurücksetzen
+    setTimeout(() => {
+        form.action = originalAction;
+        form.target = '_self';
+    }, 500);
+});
+</script>
